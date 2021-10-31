@@ -1,15 +1,14 @@
 const express = require("express")
-const bodyParser = require("body-parser")
 const cors = require("cors")
 const MongoClient = require("mongodb").MongoClient
 const ObjectId = require("mongodb").ObjectId
 require("dotenv").config()
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.dl4gc.mongodb.net/adven-tour?retryWrites=true&w=majority`
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.x1c7x.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 const app = express()
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(cors())
-const port = 5000
+const port = process.env.PORT || 5000
 
 app.get("/", (req, res) => {
   res.send("hello from db it's working working")
@@ -21,9 +20,9 @@ const client = new MongoClient(uri, {
 })
 
 client.connect((err) => {
-  const packageCollection = client.db("tour").collection("packages")
-  const testimonialCollection = client.db("tour").collection("testimonial")
-  const orderCollection = client.db("tour").collection("orders")
+  const packageCollection = client.db("advenTour").collection("bookings")
+  const testimonialCollection = client.db("advenTour").collection("testimonial")
+  const orderCollection = client.db("advenTour").collection("orders")
 
   app.get("/getFeaturedPackages", (req, res) => {
     packageCollection
